@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "SAMS_THE_APP",
+    "scheme": "SAMS_THE_APP",
     "slug": "SAMS_THE_APP",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -22,6 +23,7 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": ["expo-router"]
   }
 }
