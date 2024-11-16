@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, Animated, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
-import Logo from "../../assets/svg/Logo";
+import Logo from "../../assets/svg/logo.svg";
 
 const WelcomeScreen = () => {
   const navigation = useNavigation();
