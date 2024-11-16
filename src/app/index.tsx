@@ -1,20 +1,24 @@
 // src/app/WelcomeScreen.tsx
-import React, { useEffect } from 'react';
-import { StyleSheet, Text, View, Animated } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import React, { useEffect } from "react";
+import { StyleSheet, Text, View, Animated, ScrollView } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { StatusBar } from "expo-status-bar";
+import Logo from "../../assets/svg/Logo";
 
 const WelcomeScreen = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
     setTimeout(() => {
-      navigation.navigate('(attendance)' as never);
-    }, 2000);
+      navigation.navigate("(attendance)" as never);
+    }, 3000);
   }, []);
 
   return (
     <View style={styles.container}>
-      <Text>Welcome to SAMS_THE_APP</Text>
+      <Logo style={styles.logo}/>
+      <StatusBar style="auto"/>
     </View>
   );
 
@@ -43,19 +47,22 @@ const WelcomeScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    height: "30%",
+    
   },
   logoContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   logo: {
-    fontSize: 32,
-    fontWeight: 'bold',
+    width: 100, 
+    height: 100, 
   },
 });
 
