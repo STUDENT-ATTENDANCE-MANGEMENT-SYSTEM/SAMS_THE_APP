@@ -33,7 +33,7 @@ const TabsLayout = () => {
         initialRouteName='screens/index'
         screenOptions={{
           tabBarShowLabel: false,
-          tabBarActiveTintColor: '#1BC464',
+          tabBarActiveTintColor: '#213655',
           tabBarInactiveTintColor: 'gray',
           tabBarStyle: {
             position: 'absolute',
@@ -73,7 +73,7 @@ const TabsLayout = () => {
               >
                 <TabBarIcon
                   name={focused ? 'home' : 'home-outline'}
-                  color={focused ? '#1BC464' : 'gray'}
+                  color={focused ? '#F02A4B' : 'gray'}
                   size={size}
                   focused={focused}
                 />
@@ -93,7 +93,7 @@ const TabsLayout = () => {
               >
                 <TabBarIcon
                   name={focused ? 'calendar' : 'calendar-outline'}
-                  color={focused ? '#1BC464' : 'gray'}
+                  color={focused ? '#F02A4B' : 'gray'}
                   size={size}
                   focused={focused}
                 />
@@ -120,7 +120,7 @@ const TabsLayout = () => {
                 <TabBarIcon
                   name={'checkmark'}
                   color={'#fff'}
-                  size={80}
+                  size={60}
                   focused={focused}
                 />
               </View>
@@ -139,7 +139,7 @@ const TabsLayout = () => {
               >
                 <TabBarIcon
                   name={focused ? 'bar-chart' : 'bar-chart-outline'}
-                  color={focused ? '#1BC464' : 'gray'}
+                  color={focused ? '#F02A4B' : 'gray'}
                   size={size}
                   focused={focused}
                 />
@@ -159,7 +159,7 @@ const TabsLayout = () => {
               >
                 <TabBarIcon
                   name={focused ? 'settings' : 'settings-outline'}
-                  color={focused ? '#1BC464' : 'gray'}
+                  color={focused ? '#F02A4B' : 'gray'}
                   size={size}
                   focused={focused}
                 />
