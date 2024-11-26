@@ -1,0 +1,86 @@
+[
+  {
+    "course_code": "HIST303",
+    "course_title": "Fundamentals of Statistics",
+    "locked": true,
+    "course_admin": "Dr. Show"
+  },
+  {
+    "course_code": "CS387",
+    "course_title": "Fundamentals of Physics",
+    "locked": true,
+    "course_admin": "Prof. Oladejo"
+  },
+  {
+    "course_code": "ECON403",
+    "course_title": "Fundamentals of Physics",
+    "locked": true,
+    "course_admin": "Dr. Williams"
+  },
+  {
+    "course_code": "PSY328",
+    "course_title": "Introduction to Physics",
+    "locked": true,
+    "course_admin": "Dr. Brown"
+  },
+  {
+    "course_code": "ART397",
+    "course_title": "Understanding History",
+    "locked": true,
+    "course_admin": "Dr. Jones"
+  },
+  {
+    "course_code": "MATH354",
+    "course_title": "Basics of Programming",
+    "locked": true,
+    "course_admin": "Dr. Show"
+  },
+  {
+    "course_code": "ENG379",
+    "course_title": "Principles of Biology",
+    "locked": true,
+    "course_admin": "Dr. Martinez"
+  },
+  {
+    "course_code": "MATH357",
+    "course_title": "Applied Literature",
+    "locked": true,
+    "course_admin": "Dr. Rodriguez"
+  },
+  {
+    "course_code": "CHM387",
+    "course_title": "Introduction to Chemistry",
+    "locked": true,
+    "course_admin": "Dr. Hernandez"
+  },
+  {
+    "course_code": "ECN403",
+    "course_title": "Introduction to Chemistry",
+    "locked": true,
+    "course_admin": "Dr. Lopez"
+  },
+  {
+    "course_code": "CHE328",
+    "course_title": "Introduction to Chemistry",
+    "locked": true,
+    "course_admin": "Dr. Gonzalez"
+  },
+  {
+    "course_code": "CHE397",
+    "course_title": "Introduction to Chemistry",
+    "locked": true,
+    "course_admin": "Mr. Wilson"
+  },
+  {
+    "course_code": "INT354",
+    "course_title": "Introduction to Chemistry",
+    "locked": true,
+    "course_admin": "Prof. Oladejo"
+  },
+  {
+    "course_code": "MEE379",
+    "course_title": "Introduction to Chemistry",
+    "locked": true,
+    "course_admin": "Prof. Oladejo"
+  }
+]

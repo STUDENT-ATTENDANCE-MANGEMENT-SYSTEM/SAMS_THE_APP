@@ -1,169 +1,153 @@
-import { Redirect, Tabs } from 'expo-router';
+import React, { useEffect } from 'react';
+import { StyleSheet, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import {
-  ActivityIndicator,
-  Platform,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Tabs } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+import * as NavigationBar from 'expo-navigation-bar';
 import { Ionicons } from '@expo/vector-icons';
-import dashboard from './screens/dashboard';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+} from 'react-native-reanimated';
+import { BlurView } from 'expo-blur';
 
-function TabBarIcon(props: {
+function AnimatedTabBarIcon(props: {
   name: React.ComponentProps<typeof Ionicons>['name'];
   color: string;
-  style?: object;
   size?: number;
   focused: boolean;
 }) {
+  const scale = useSharedValue(1);
+
+  const colorPalette = {
+    primary: '#f2575d', //cherry red
+    secondary: '#213655', //dark blue
+    accent: '#d4c4b4', //light brown
+    background: '#f4ece4', //light peach
+    textPrimary: '#4c749c', //light blue
+    textSecondary: '#243454', //dark blue
+    highlight: '#b8dce8', // very light blue
+  };
+
+  React.useEffect(() => {
+    scale.value = withTiming(props.focused ? 1.2 : 1, {
+      duration: 300,
+    });
+  }, [props.focused]);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
+
   return (
-    <Ionicons
-      size={props.size || 24}
-      {...props}
-      style={[{ color: props.color }, props.style]}
-    />
+    <Animated.View style={animatedStyle}>
+      <Ionicons
+        size={props.size || 24}
+        name={props.name}
+        color={colorPalette.primary}
+        style={{ color: props.color }}
+      />
+    </Animated.View>
   );
 }
 
 const TabsLayout = () => {
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      NavigationBar.setBackgroundColorAsync('#243454');
+    }
+  }, []);
+
   return (
-    <SafeAreaView edges={['top']} style={styles.safeArea}>
+    <SafeAreaView
+      edges={['top']}
+      style={{ flex: 1, backgroundColor: '#f4ece4' }}
+    >
+      <StatusBar style='auto' backgroundColor='#d4c4b4' />
+
       <Tabs
         initialRouteName='screens/index'
         screenOptions={{
           tabBarShowLabel: false,
-          tabBarActiveTintColor: '#213655',
-          tabBarInactiveTintColor: 'gray',
+          tabBarActiveTintColor: '#f2575d',
+          tabBarInactiveTintColor: '#d4c4b4',
           tabBarStyle: {
-            position: 'absolute',
-            ...Platform.select({
-              android: {
-                paddingBottom: 24,
-                bottom: 20,
-              },
-              ios: {
-                bottom: 40,
-              },
-            }),
-            backgroundColor: '#fff',
-            borderRadius: 20,
-            height: 90,
-            ...styles.shadow,
-            width: '90%',
-            marginHorizontal: '5%',
-            paddingVertical: 0,
-            flex: 1,
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
             flexDirection: 'row',
             justifyContent: 'space-around',
             alignItems: 'center',
+            ...Platform.select({
+              android: {
+                paddingBottom: 24,
+                height: 70,
+                backgroundColor: '#4c749c',
+              },
+              ios: { height: 90, backgroundColor: '#4c749c' },
+            }),
           },
+
           headerShown: false,
         }}
       >
         <Tabs.Screen
-          name='screens/dashboard'
+          name='screens/index'
           options={{
-            title: 'Dashboard',
-            tabBarIcon: ({ focused, color, size }) => (
-              <View
-                style={{
-                  alignItems: 'center',
-                }}
-              >
-                <TabBarIcon
-                  name={focused ? 'home' : 'home-outline'}
-                  color={focused ? '#F02A4B' : 'gray'}
-                  size={size}
-                  focused={focused}
-                />
-              </View>
+            title: 'Attendance',
+            tabBarIcon: ({ focused, size }) => (
+              <AnimatedTabBarIcon
+                name={focused ? 'home' : 'home-outline'}
+                color={focused ? '#f2575d' : '#d4c4b4'}
+                size={size}
+                focused={focused}
+              />
             ),
           }}
         />
+
         <Tabs.Screen
           name='screens/timetable'
           options={{
             title: 'timetable',
             tabBarIcon: ({ focused, color, size }) => (
-              <View
-                style={{
-                  alignItems: 'center',
-                }}
-              >
-                <TabBarIcon
-                  name={focused ? 'calendar' : 'calendar-outline'}
-                  color={focused ? '#F02A4B' : 'gray'}
-                  size={size}
-                  focused={focused}
-                />
-              </View>
+              <AnimatedTabBarIcon
+                name={focused ? 'calendar' : 'calendar-outline'}
+                color={focused ? '#f2575d' : '#d4c4b4'}
+                size={size}
+                focused={focused}
+              />
             ),
           }}
         />
-        <Tabs.Screen
-          name='screens/index'
-          options={{
-            title: 'Attendance',
-            tabBarIcon: ({ focused, color, size }) => (
-              <View
-                style={{
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  width: 80,
-                  height: 80,
-                  borderRadius: 40,
-                  backgroundColor: '#F02A4B',
-                  marginBottom: 80,
-                }}
-              >
-                <TabBarIcon
-                  name={'checkmark'}
-                  color={'#fff'}
-                  size={60}
-                  focused={focused}
-                />
-              </View>
-            ),
-          }}
-        />
+
         <Tabs.Screen
           name='screens/insights'
           options={{
             title: 'insights',
             tabBarIcon: ({ focused, color, size }) => (
-              <View
-                style={{
-                  alignItems: 'center',
-                }}
-              >
-                <TabBarIcon
-                  name={focused ? 'bar-chart' : 'bar-chart-outline'}
-                  color={focused ? '#F02A4B' : 'gray'}
-                  size={size}
-                  focused={focused}
-                />
-              </View>
+              <AnimatedTabBarIcon
+                name={focused ? 'stats-chart' : 'stats-chart-outline'}
+                color={focused ? '#f2575d' : '#d4c4b4'}
+                size={size}
+                focused={focused}
+              />
             ),
           }}
         />
         <Tabs.Screen
-          name='screens/settings'
+          name='screens/dashboard'
           options={{
-            title: 'settings',
+            title: 'Dashboard',
             tabBarIcon: ({ focused, color, size }) => (
-              <View
-                style={{
-                  alignItems: 'center',
-                }}
-              >
-                <TabBarIcon
-                  name={focused ? 'settings' : 'settings-outline'}
-                  color={focused ? '#F02A4B' : 'gray'}
-                  size={size}
-                  focused={focused}
-                />
-              </View>
+              <AnimatedTabBarIcon
+                name={focused ? 'person' : 'person-outline'}
+                color={focused ? '#f2575d' : '#d4c4b4'}
+                size={size}
+                focused={focused}
+              />
             ),
           }}
         />
@@ -172,21 +156,10 @@ const TabsLayout = () => {
   );
 };
 
-export default TabsLayout;
-
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
   },
-  shadow: {
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 10,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  iconStyle: {},
 });
+
+export default TabsLayout;
