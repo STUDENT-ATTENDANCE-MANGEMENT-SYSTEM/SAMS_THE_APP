@@ -35,7 +35,7 @@ const WelcomeScreen = () => {
     };
 
     checkIfNewUser();
-  }, []);
+  
 
     fadeAnim.value = withTiming(1, {
       duration: 2000,
