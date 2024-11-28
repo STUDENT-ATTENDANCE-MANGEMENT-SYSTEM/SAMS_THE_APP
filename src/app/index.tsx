@@ -5,14 +5,25 @@ import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import Logo from "../../assets/svg/logo.svg";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const WelcomeScreen = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    setTimeout(() => {
-      navigation.navigate("(attendance)" as never);
-    }, 3000);
+    const checkIfNewUser = async () => {
+      const isNewUser = await AsyncStorage.getItem('isNewUser');
+      if (isNewUser === null) {
+        await AsyncStorage.setItem('isNewUser', 'false');
+        navigation.navigate('onboarding' as never);
+      } else {
+        setTimeout(() => {
+          navigation.navigate('(attendance)' as never);
+        }, 3000);
+      }
+    };
+
+    checkIfNewUser();
   }, []);
 
   return (
