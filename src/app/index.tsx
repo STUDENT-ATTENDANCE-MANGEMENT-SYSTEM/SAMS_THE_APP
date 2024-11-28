@@ -1,8 +1,10 @@
+
 import React, { useEffect } from 'react';
 import { StyleSheet, View, Dimensions } from 'react-native';
 import { useNavigation, CommonActions } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import Logo from '../../assets/svg/logo.svg';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Animated, {
   Easing,
   useSharedValue,
@@ -12,12 +14,29 @@ import Animated, {
 
 const { width, height } = Dimensions.get('window');
 
+
 const WelcomeScreen = () => {
   const navigation = useNavigation();
   const fadeAnim = useSharedValue(0);
   const scaleAnim = useSharedValue(0);
-
+  
   useEffect(() => {
+
+    const checkIfNewUser = async () => {
+      const isNewUser = await AsyncStorage.getItem('isNewUser');
+      if (isNewUser === null) {
+        await AsyncStorage.setItem('isNewUser', 'false');
+        navigation.navigate('onboarding' as never);
+      } else {
+        setTimeout(() => {
+          navigation.navigate('(attendance)' as never);
+        }, 3000);
+      }
+    };
+
+    checkIfNewUser();
+  }, []);
+
     fadeAnim.value = withTiming(1, {
       duration: 2000,
       easing: Easing.out(Easing.exp),
@@ -51,6 +70,7 @@ const WelcomeScreen = () => {
       opacity: fadeAnim.value,
     };
   });
+
 
   return (
     <View style={styles.container}>
