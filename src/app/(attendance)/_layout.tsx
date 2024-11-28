@@ -1,19 +1,19 @@
-import React, { useEffect } from 'react';
-import { StyleSheet, Platform } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Tabs } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import * as NavigationBar from 'expo-navigation-bar';
-import { Ionicons } from '@expo/vector-icons';
+import React, { useEffect } from "react";
+import { StyleSheet, Platform } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Tabs } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import * as NavigationBar from "expo-navigation-bar";
+import { Ionicons } from "@expo/vector-icons";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
-} from 'react-native-reanimated';
-import { BlurView } from 'expo-blur';
+} from "react-native-reanimated";
+import { BlurView } from "expo-blur";
 
 function AnimatedTabBarIcon(props: {
-  name: React.ComponentProps<typeof Ionicons>['name'];
+  name: React.ComponentProps<typeof Ionicons>["name"];
   color: string;
   size?: number;
   focused: boolean;
@@ -21,13 +21,13 @@ function AnimatedTabBarIcon(props: {
   const scale = useSharedValue(1);
 
   const colorPalette = {
-    primary: '#f2575d', //cherry red
-    secondary: '#213655', //dark blue
-    accent: '#d4c4b4', //light brown
-    background: '#f4ece4', //light peach
-    textPrimary: '#4c749c', //light blue
-    textSecondary: '#243454', //dark blue
-    highlight: '#b8dce8', // very light blue
+    primary: "#f2575d", //cherry red
+    secondary: "#213655", //dark blue
+    accent: "#d4c4b4", //light brown
+    background: "#f4ece4", //light peach
+    textPrimary: "#4c749c", //light blue
+    textSecondary: "#243454", //dark blue
+    highlight: "#b8dce8", // very light blue
   };
 
   React.useEffect(() => {
@@ -56,37 +56,39 @@ function AnimatedTabBarIcon(props: {
 
 const TabsLayout = () => {
   useEffect(() => {
-    if (Platform.OS === 'android') {
-      NavigationBar.setBackgroundColorAsync('#243454');
+    if (Platform.OS === "android") {
+      NavigationBar.setBackgroundColorAsync("#fff");
     }
   }, []);
 
   return (
     <SafeAreaView
-      edges={['top']}
-      style={{ flex: 1, backgroundColor: '#f4ece4' }}
+      edges={["top"]}
+      style={{ flex: 1, backgroundColor: "#fff" }}
     >
-      <StatusBar style='auto' backgroundColor='#d4c4b4' />
+      <StatusBar style="auto" backgroundColor="#fff" />
 
       <Tabs
-        initialRouteName='screens/index'
+        initialRouteName="screens/index"
         screenOptions={{
-          tabBarShowLabel: false,
-          tabBarActiveTintColor: '#f2575d',
-          tabBarInactiveTintColor: '#d4c4b4',
+          tabBarShowLabel: true,
+          tabBarActiveTintColor: "#f2575d",
+          tabBarInactiveTintColor: "#fff",
           tabBarStyle: {
-            borderTopLeftRadius: 20,
-            borderTopRightRadius: 20,
-            flexDirection: 'row',
-            justifyContent: 'space-around',
-            alignItems: 'center',
+            borderTopLeftRadius: 0,
+            borderTopRightRadius: 0,
+            borderTopWidth: 2, 
+            borderTopColor: "#ccc",
+            flexDirection: "row",
+            justifyContent: "space-around",
+            alignItems: "center",
             ...Platform.select({
               android: {
                 paddingBottom: 24,
                 height: 70,
-                backgroundColor: '#4c749c',
+                backgroundColor: "#fff",
               },
-              ios: { height: 90, backgroundColor: '#4c749c' },
+              ios: { height: 90, backgroundColor: "#fff" },
             }),
           },
 
@@ -94,13 +96,14 @@ const TabsLayout = () => {
         }}
       >
         <Tabs.Screen
-          name='screens/index'
+          name="screens/index"
           options={{
-            title: 'Attendance',
+            title: "Attendance",
+            tabBarLabel: "Attendance",
             tabBarIcon: ({ focused, size }) => (
               <AnimatedTabBarIcon
-                name={focused ? 'home' : 'home-outline'}
-                color={focused ? '#f2575d' : '#d4c4b4'}
+                name={focused ? "checkmark-circle" : "checkmark-circle-outline"}
+                color={focused ? "#1c1c1c" : "#ccc"}
                 size={size}
                 focused={focused}
               />
@@ -109,13 +112,14 @@ const TabsLayout = () => {
         />
 
         <Tabs.Screen
-          name='screens/timetable'
+          name="screens/timetable"
           options={{
-            title: 'timetable',
+            title: "timetable",
+            tabBarLabel: "Timetable", 
             tabBarIcon: ({ focused, color, size }) => (
               <AnimatedTabBarIcon
-                name={focused ? 'calendar' : 'calendar-outline'}
-                color={focused ? '#f2575d' : '#d4c4b4'}
+                name={focused ? "calendar" : "calendar-outline"}
+                color={focused ? "#1c1c1c" : "#ccc"}
                 size={size}
                 focused={focused}
               />
@@ -124,13 +128,13 @@ const TabsLayout = () => {
         />
 
         <Tabs.Screen
-          name='screens/insights'
+          name="screens/insights"
           options={{
-            title: 'insights',
+            title: "insights",
             tabBarIcon: ({ focused, color, size }) => (
               <AnimatedTabBarIcon
-                name={focused ? 'stats-chart' : 'stats-chart-outline'}
-                color={focused ? '#f2575d' : '#d4c4b4'}
+                name={focused ? "stats-chart" : "stats-chart-outline"}
+                color={focused ? "#1c1c1c" : "#ccc"}
                 size={size}
                 focused={focused}
               />
@@ -138,13 +142,13 @@ const TabsLayout = () => {
           }}
         />
         <Tabs.Screen
-          name='screens/dashboard'
+          name="screens/dashboard"
           options={{
-            title: 'Dashboard',
+            title: "Dashboard",
             tabBarIcon: ({ focused, color, size }) => (
               <AnimatedTabBarIcon
-                name={focused ? 'person' : 'person-outline'}
-                color={focused ? '#f2575d' : '#d4c4b4'}
+                name={focused ? "person" : "person-outline"}
+                color={focused ? "#1c1c1c" : "#ccc"}
                 size={size}
                 focused={focused}
               />

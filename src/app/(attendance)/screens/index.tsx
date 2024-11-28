@@ -43,7 +43,7 @@ const colorPalette: {
   primary: '#f2575d',
   secondary: '#213655',
   accent: '#d4c4b4',
-  background: '#f4ece4',
+  background: '#fff',
   textPrimary: '#4c749c',
   textSecondary: '#243454',
   highlight: '#b8dce8',
@@ -56,7 +56,7 @@ const Home = () => {
   const [newCourseTitle, setNewCourseTitle] = useState('');
   const [newCourseCode, setNewCourseCode] = useState('');
   // add lecturer's name dynamically
-  const [role, setRole] = useState<Role>('user');
+  const [role, setRole] = useState<Role>('admin');
   const [refreshing, setRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const refreshAnim = useRef(new Animated.Value(0)).current;
@@ -150,21 +150,20 @@ const Home = () => {
               <Ionicons name='add' size={24} color='black' />
             </TouchableOpacity>
             <Ionicons name='notifications' size={24} color='black' />
-            <Image
-              source={require('../../../../assets/images/icon8.png')}
-              style={{ width: 24, height: 24 }}
-            />
           </View>
         </BlurView>
 
         <BlurView intensity={5} style={styles.welcomeWrapper}>
+        <View style={styles.searchContainer}>
+          <Ionicons name="search" size={20} color="#ccc" style={styles.searchIcon} />
           <TextInput
             style={styles.searchBar}
-            placeholder='Search...'
-            placeholderTextColor={colorPalette.textSecondary}
+            placeholder="Search for attendance"
+            placeholderTextColor="#ccc"
             value={searchQuery}
             onChangeText={setSearchQuery}
           />
+        </View>
         </BlurView>
       </>
       <FlatList
@@ -220,7 +219,7 @@ const Home = () => {
                   <Button
                     title='Cancel'
                     onPress={() => setModalVisible(false)}
-                    color='red'
+                    color='#f2575d'
                   />
                 </View>
               </>
@@ -297,6 +296,7 @@ const CourseItem = React.memo(
         <View style={styles.card}>
           <Text style={styles.courseCode}>{course.course_code}</Text>
           <Text style={styles.courseTitle}>{course.course_title}</Text>
+          
           <Ionicons
             name={course.locked ? 'lock-closed' : 'lock-open'}
             size={24}
@@ -340,6 +340,7 @@ const CourseItem = React.memo(
           >
             <Text style={styles.courseCode}>{course.course_code}</Text>
             <Text style={styles.courseTitle}>{course.course_title}</Text>
+            <View style={styles.lock}>
             <Ionicons
               name={course.locked ? 'lock-closed' : 'lock-open'}
               size={24}
@@ -347,7 +348,9 @@ const CourseItem = React.memo(
                 course.locked ? colorPalette.primary : colorPalette.highlight
               }
             />
-            <Text>{course.course_admin}</Text>
+            </View>
+            
+            <Text style={styles.admin}>{course.course_admin}</Text>
           </Pressable>
         </Animated.View>
       );
@@ -374,8 +377,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 10,
     padding: 10,
-    backgroundColor: '#f4ece4',
-    borderRadius: 10,
   },
   NotificationWrapper: {
     display: 'flex',
@@ -385,12 +386,24 @@ const styles = StyleSheet.create({
   searchBar: {
     flex: 1,
     height: 40,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 10,
-    paddingLeft: 10,
+    paddingLeft: 40,
+    color: '#000',
+  },
+   searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: '#fff',
-    width: '100%',
+    borderColor: '#ccc',
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    position: 'relative',
+    borderWidth: 1,
+  },
+  searchIcon: {
+    position: 'absolute',
+    left: 10,
+    top: '50%',
+    transform: [{ translateY: -10 }],
   },
 
   grid: {
@@ -406,18 +419,23 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     // justifyContent: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
-    shadowRadius: 5,
+    shadowRadius: 25,
     elevation: 5,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    position: 'relative',
   },
   courseCode: {
     fontSize: 16,
     fontWeight: 'bold',
+    marginTop: 5,
   },
   courseTitle: {
     fontSize: 14,
     color: '#888',
+    paddingTop: 5,
   },
   modalBackground: {
     flex: 1,
@@ -458,6 +476,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
+  },
+  lock: {
+    position: 'absolute',
+    top: -5,
+    left: 280,
+
+  },
+
+  admin: {
+    fontSize: 14,
+    color: '#999',
+    marginTop: 55,
   },
 });
 

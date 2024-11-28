@@ -29,7 +29,7 @@ const WelcomeScreen = () => {
         navigation.navigate('onboarding' as never);
       } else {
         setTimeout(() => {
-          navigation.navigate('(attendance)' as never);
+          navigation.navigate('(auth)' as never);
         }, 3000);
       }
     };
@@ -51,7 +51,7 @@ const WelcomeScreen = () => {
       navigation.dispatch(
         CommonActions.reset({
           index: 0,
-          routes: [{ name: '(attendance)' }],
+          routes: [{ name: '(auth)' }],
         })
       );
     }, 3000);
