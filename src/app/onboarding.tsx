@@ -40,7 +40,7 @@ const onboarding = () => {
 
   const onDone = async () => {
     await AsyncStorage.setItem('isNewUser', 'false');
-    navigation.navigate('(attendance)' as never);
+    navigation.navigate('(auth)' as never);
     setShowMorePage(true)
 };
     

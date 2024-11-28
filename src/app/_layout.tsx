@@ -14,7 +14,7 @@ export default function RootLayout() {
         options={{ headerShown: false, title: 'Attendance' }}
       />
       <Stack.Screen
-        name='auth'
+        name='(auth)'
         options={{ headerShown: false, title: 'Auth' }}
       />
     </Stack>
