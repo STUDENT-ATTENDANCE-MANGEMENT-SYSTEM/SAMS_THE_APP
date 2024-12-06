@@ -21,6 +21,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
 import AppLoading from 'expo-app-loading';
 import userdata from '../../../../assets/data/userdata.json';
+import { useSelector } from 'react-redux';
+import { selectRole } from '../../../features/auth/authSlice';
 
 type Role = 'admin' | 'user';
 
@@ -56,10 +58,11 @@ const Home = () => {
   const [newCourseTitle, setNewCourseTitle] = useState('');
   const [newCourseCode, setNewCourseCode] = useState('');
   // add lecturer's name dynamically
-  const [role, setRole] = useState<Role>('admin');
+  // const [role, setRole] = useState<Role>('admin');
   const [refreshing, setRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const refreshAnim = useRef(new Animated.Value(0)).current;
+  const role = (useSelector(selectRole) as Role) || 'user';
 
   useFocusEffect(
     React.useCallback(() => {
@@ -154,16 +157,21 @@ const Home = () => {
         </BlurView>
 
         <BlurView intensity={5} style={styles.welcomeWrapper}>
-        <View style={styles.searchContainer}>
-          <Ionicons name="search" size={20} color="#ccc" style={styles.searchIcon} />
-          <TextInput
-            style={styles.searchBar}
-            placeholder="Search for attendance"
-            placeholderTextColor="#ccc"
-            value={searchQuery}
-            onChangeText={setSearchQuery}
-          />
-        </View>
+          <View style={styles.searchContainer}>
+            <Ionicons
+              name='search'
+              size={20}
+              color='#ccc'
+              style={styles.searchIcon}
+            />
+            <TextInput
+              style={styles.searchBar}
+              placeholder='Search for attendance'
+              placeholderTextColor='#ccc'
+              value={searchQuery}
+              onChangeText={setSearchQuery}
+            />
+          </View>
         </BlurView>
       </>
       <FlatList
@@ -172,7 +180,7 @@ const Home = () => {
         keyExtractor={(item) => item.course_code}
         numColumns={1}
         contentContainerStyle={styles.grid}
-        // ListHeaderComponent={renderHeader}
+        // ListHeaderComponent={renderHeader
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
         getItemLayout={(data, index) => ({
@@ -296,7 +304,7 @@ const CourseItem = React.memo(
         <View style={styles.card}>
           <Text style={styles.courseCode}>{course.course_code}</Text>
           <Text style={styles.courseTitle}>{course.course_title}</Text>
-          
+
           <Ionicons
             name={course.locked ? 'lock-closed' : 'lock-open'}
             size={24}
@@ -341,15 +349,15 @@ const CourseItem = React.memo(
             <Text style={styles.courseCode}>{course.course_code}</Text>
             <Text style={styles.courseTitle}>{course.course_title}</Text>
             <View style={styles.lock}>
-            <Ionicons
-              name={course.locked ? 'lock-closed' : 'lock-open'}
-              size={24}
-              color={
-                course.locked ? colorPalette.primary : colorPalette.highlight
-              }
-            />
+              <Ionicons
+                name={course.locked ? 'lock-closed' : 'lock-open'}
+                size={24}
+                color={
+                  course.locked ? colorPalette.primary : colorPalette.highlight
+                }
+              />
             </View>
-            
+
             <Text style={styles.admin}>{course.course_admin}</Text>
           </Pressable>
         </Animated.View>
@@ -389,7 +397,7 @@ const styles = StyleSheet.create({
     paddingLeft: 40,
     color: '#000',
   },
-   searchContainer: {
+  searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#fff',
@@ -407,6 +415,7 @@ const styles = StyleSheet.create({
   },
 
   grid: {
+    backgroundColor: colorPalette.background,
     // justifyContent: 'space-between',
   },
   card: {
@@ -418,7 +427,7 @@ const styles = StyleSheet.create({
     height: 150,
     // alignItems: 'center',
     // justifyContent: 'center',
-    shadowColor: '#000',
+    shadowColor: 'transparent',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 25,
@@ -481,7 +490,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: -5,
     left: 280,
-
   },
 
   admin: {
