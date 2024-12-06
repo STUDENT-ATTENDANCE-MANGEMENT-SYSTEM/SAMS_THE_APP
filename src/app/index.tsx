@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { StyleSheet, View, Dimensions } from 'react-native';
 import { useNavigation, CommonActions } from '@react-navigation/native';
@@ -11,31 +10,44 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
+import { useSelector } from 'react-redux';
+import { selectRole } from '../features/auth/authSlice';
 
 const { width, height } = Dimensions.get('window');
-
 
 const WelcomeScreen = () => {
   const navigation = useNavigation();
   const fadeAnim = useSharedValue(0);
   const scaleAnim = useSharedValue(0);
-  
-  useEffect(() => {
+  const role = useSelector(selectRole);
 
-    const checkIfNewUser = async () => {
+  useEffect(() => {
+    const checkUserStatus = async () => {
       const isNewUser = await AsyncStorage.getItem('isNewUser');
       if (isNewUser === null) {
-        await AsyncStorage.setItem('isNewUser', 'false');
+        await AsyncStorage.setItem('isNewUser', 'true');
         navigation.navigate('onboarding' as never);
       } else {
-        setTimeout(() => {
-          navigation.navigate('(auth)' as never);
-        }, 3000);
+        const session = await AsyncStorage.getItem('session');
+        if (session && role) {
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{ name: '(attendance)' }],
+            })
+          );
+        } else {
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{ name: '(auth)' }],
+            })
+          );
+        }
       }
     };
 
-    checkIfNewUser();
-  
+    // checkIfNewUser();
 
     fadeAnim.value = withTiming(1, {
       duration: 2000,
@@ -47,14 +59,7 @@ const WelcomeScreen = () => {
       easing: Easing.out(Easing.exp),
     });
 
-    const timeout = setTimeout(() => {
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [{ name: '(auth)' }],
-        })
-      );
-    }, 3000);
+    const timeout = setTimeout(checkUserStatus, 3000);
 
     return () => clearTimeout(timeout);
   }, [fadeAnim, scaleAnim, navigation]);
@@ -70,7 +75,6 @@ const WelcomeScreen = () => {
       opacity: fadeAnim.value,
     };
   });
-
 
   return (
     <View style={styles.container}>

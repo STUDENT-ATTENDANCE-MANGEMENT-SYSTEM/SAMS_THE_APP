@@ -1,36 +1,35 @@
-import { StyleSheet, Text, View, Image, Pressable } from "react-native";
-import React from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { template } from "@babel/core";
-import { useNavigation } from '@react-navigation/native';
-
+import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
+import React from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { RootStackParamList } from '../../types';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 
 const Index = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <Image
-          source={require("../../../assets/constant/Idea.png")}
+          source={require('../../../assets/constant/Idea.png')}
           style={styles.image}
         />
         <View style={styles.textWrapper}>
           <Text style={styles.textOne}>
-            The best way to manage your attendance efficiently and effectively
+            The best way to manage your attendance efficiently and effectively.
           </Text>
           <Text style={styles.textTwo}>Get started</Text>
         </View>
 
         <Pressable
           style={styles.buttonOne}
-          onPress={() => navigation.navigate('(attendance)' as never)}
+          onPress={() => navigation.navigate('sign-up', { role: 'user' })}
         >
           <Text style={styles.buttonText}>Student</Text>
         </Pressable>
         <Pressable
           style={styles.buttonTwo}
-          onPress={() => navigation.navigate('(attendance)' as never)}
+          onPress={() => navigation.navigate('sign-up', { role: 'admin' })}
         >
           <Text style={styles.buttonTextTwo}>Educator</Text>
         </Pressable>
@@ -44,57 +43,57 @@ export default Index;
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
   },
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     padding: 16,
   },
   image: {
     width: 300,
     height: 300,
-    resizeMode: "contain",
+    resizeMode: 'contain',
     marginBottom: -20,
   },
   textWrapper: {
-    flexDirection: "column",
+    flexDirection: 'column',
     paddingHorizontal: 20,
     marginBottom: 20,
-  },  
+  },
   textOne: {
     fontSize: 15,
-    textAlign: "center",
+    textAlign: 'center',
     marginBottom: 20,
   },
   textTwo: {
     fontSize: 20,
-    textAlign: "center",
+    textAlign: 'center',
   },
   buttonOne: {
-    backgroundColor: "#f2575d",
+    backgroundColor: '#f2575d',
     padding: 10,
     borderRadius: 30,
     marginBottom: 10,
-    width: "80%",
-    alignItems: "center",
+    width: '80%',
+    alignItems: 'center',
   },
   buttonTwo: {
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     padding: 10,
     borderRadius: 30,
-    borderColor: "#f2575d",
+    borderColor: '#f2575d',
     borderWidth: 2,
-    width: "80%",
-    alignItems: "center",
+    width: '80%',
+    alignItems: 'center',
   },
   buttonText: {
-    color: "white",
+    color: 'white',
     fontSize: 18,
   },
   buttonTextTwo: {
-    color: "black",
+    color: 'black',
     fontSize: 18,
   },
 });

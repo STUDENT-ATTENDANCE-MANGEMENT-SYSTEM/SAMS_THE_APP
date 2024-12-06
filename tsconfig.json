@@ -3,6 +3,13 @@
   "compilerOptions": {
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "strict": true
+    "strict": true,
+    "target": "es5",
+    "module": "commonjs",
+    "lib": ["dom", "es2017"],
+    "jsx": "react", // or "react-jsx"
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
   }
 }
