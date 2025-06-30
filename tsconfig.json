@@ -4,11 +4,11 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "strict": true,
-    "target": "es5",
-    "module": "commonjs",
+    "target": "es2017",
+    "module": "es2015",
     "lib": ["dom", "es2017"],
-    "jsx": "react", // or "react-jsx"
-    "moduleResolution": "node",
+    "jsx": "react",
+    "moduleResolution": "bundler",
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   }

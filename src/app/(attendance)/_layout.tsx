@@ -1,16 +1,19 @@
-import React, { useEffect } from 'react';
-import { StyleSheet, Platform } from 'react-native';
+import React from 'react';
+import {
+  StyleSheet,
+  Platform,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Tabs } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import * as NavigationBar from 'expo-navigation-bar';
 import { Ionicons } from '@expo/vector-icons';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
-import { BlurView } from 'expo-blur';
 
 function AnimatedTabBarIcon(props: {
   name: React.ComponentProps<typeof Ionicons>['name'];
@@ -55,38 +58,81 @@ function AnimatedTabBarIcon(props: {
 }
 
 const TabsLayout = () => {
-  useEffect(() => {
-    if (Platform.OS === 'android') {
-      NavigationBar.setBackgroundColorAsync('black');
-    }
-  }, []);
-
   return (
-    <SafeAreaView edges={['top']} style={{ flex: 1, backgroundColor: '#fff' }}>
-      <StatusBar style='auto' backgroundColor='#fff' />
+    <SafeAreaView
+      edges={['top', 'bottom']}
+      style={{ flex: 1, backgroundColor: '#fff' }}
+    >
+      <StatusBar style='auto' />
 
       <Tabs
         initialRouteName='screens/index'
         screenOptions={{
           tabBarShowLabel: false,
-          tabBarActiveTintColor: '#f2575d',
-          tabBarInactiveTintColor: '#fff',
+          tabBarActiveTintColor: '#213655',
+          tabBarInactiveTintColor: '#4c749c',
+          tabBarButton: (props) => {
+            const {
+              onPress,
+              onLongPress,
+              children,
+              style,
+              accessibilityState,
+            } = props;
+            const focused = accessibilityState?.selected;
+
+            return (
+              <TouchableWithoutFeedback
+                onPress={onPress}
+                onLongPress={onLongPress || undefined}
+              >
+                <View
+                  style={[
+                    style,
+                    {
+                      backgroundColor: focused ? '#d4c4b4' : 'transparent',
+                      borderRadius: 20,
+                      marginHorizontal: 4,
+                      paddingVertical: 8,
+                      paddingHorizontal: 8,
+                    },
+                  ]}
+                >
+                  {children}
+                </View>
+              </TouchableWithoutFeedback>
+            );
+          },
           tabBarStyle: {
-            borderTopLeftRadius: 0,
-            borderTopRightRadius: 0,
-            borderTopWidth: 2,
-            borderTopColor: '#ccc',
-            flexDirection: 'row',
-            justifyContent: 'space-around',
-            alignItems: 'center',
+            backgroundColor: '#f4ece4',
+            borderTopWidth: 0,
+            borderTopLeftRadius: 25,
+            borderTopRightRadius: 25,
+            shadowColor: '#213655',
+            shadowOffset: { width: 0, height: -4 },
+            shadowOpacity: 0.15,
+            shadowRadius: 12,
             ...Platform.select({
               android: {
-                paddingBottom: 24,
-                height: 70,
-                backgroundColor: '#fff',
+                paddingBottom: 12,
+                paddingTop: 10,
+                height: 75,
+                elevation: 20,
               },
-              ios: { height: 90, backgroundColor: '#fff' },
+              ios: {
+                height: 95,
+                paddingBottom: 25,
+                paddingTop: 16,
+              },
             }),
+          },
+          tabBarItemStyle: {
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            paddingVertical: 8,
+            marginHorizontal: 4,
+            borderRadius: 20,
           },
 
           headerShown: false,
@@ -100,7 +146,7 @@ const TabsLayout = () => {
             tabBarIcon: ({ focused, size }) => (
               <AnimatedTabBarIcon
                 name={focused ? 'checkmark-circle' : 'checkmark-circle-outline'}
-                color={focused ? '#1c1c1c' : '#ccc'}
+                color={focused ? '#213655' : '#4c749c'}
                 size={size}
                 focused={focused}
               />
@@ -116,7 +162,7 @@ const TabsLayout = () => {
             tabBarIcon: ({ focused, color, size }) => (
               <AnimatedTabBarIcon
                 name={focused ? 'calendar' : 'calendar-outline'}
-                color={focused ? '#1c1c1c' : '#ccc'}
+                color={focused ? '#213655' : '#4c749c'}
                 size={size}
                 focused={focused}
               />
@@ -131,7 +177,7 @@ const TabsLayout = () => {
             tabBarIcon: ({ focused, color, size }) => (
               <AnimatedTabBarIcon
                 name={focused ? 'stats-chart' : 'stats-chart-outline'}
-                color={focused ? '#1c1c1c' : '#ccc'}
+                color={focused ? '#213655' : '#4c749c'}
                 size={size}
                 focused={focused}
               />
@@ -145,7 +191,7 @@ const TabsLayout = () => {
             tabBarIcon: ({ focused, color, size }) => (
               <AnimatedTabBarIcon
                 name={focused ? 'person' : 'person-outline'}
-                color={focused ? '#1c1c1c' : '#ccc'}
+                color={focused ? '#213655' : '#4c749c'}
                 size={size}
                 focused={focused}
               />
